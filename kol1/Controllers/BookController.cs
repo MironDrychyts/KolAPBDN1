@@ -32,11 +32,10 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddBook(AddBook book)
     {
-        if (!await _bookRepository.AddBock(book))
-        {
-            return NotFound("This genres does not exists");
-        }
 
-        return Created("api/Book",null);
+        int id = await _bookRepository.AddBock(book);
+       
+
+        return Created(Request.Path.Value ?? "api/Book/",  await _bookRepository.getBook(id));
     }
 }

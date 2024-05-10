@@ -239,7 +239,7 @@ public class BookRepository : IBookRepository
         }
     }
 */
-    public async Task<bool> AddBock(AddBook book)
+    public async Task<int> AddBock(AddBook book)
  {
      await using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
      await using SqlCommand command = new SqlCommand();
@@ -298,7 +298,7 @@ public class BookRepository : IBookRepository
 
 
                  transaction.CommitAsync();
-                 return true;
+                 return Id;
 
 
 
@@ -307,7 +307,7 @@ public class BookRepository : IBookRepository
          {
              Console.WriteLine("Transaction failed. Rolling back.");
              transaction.RollbackAsync();
-             return false;
+             throw;
          }
 
     }
